@@ -15,7 +15,7 @@
     [compojure.route :as route]))
 
 ;;
-;; Send  metrics Zabbix  trapper  items with  "ZBXD\1" TCP  protocoll.
+;; Send metrics for Zabbix trapper items with "ZBXD\1" TCP protocoll.
 ;; Beware  that  Numeric(float) item  type  chokes  on large  numbers.
 ;; Consider using Numeric(unsigned) and convert to long integers here.
 ;;
