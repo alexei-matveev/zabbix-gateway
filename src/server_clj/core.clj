@@ -48,9 +48,9 @@
         info (zbx-send metrics)
         tx {:q metrics :a info}]
     (println tx)
-    ;; Just the wrapper "wrap-json-response" does not suffice you need
-    ;; to decorate with ring.util.response/response:
-    (re/response tx)))
+    ;; Just the wrapper "wrap-json-response"  does not suffice --- you
+    ;; need to decorate with ring.util.response/response:
+    (re/response info)))
 
 (cc/defroutes api-routes
   (cc/POST "/post-json" request (make-reply request)))
