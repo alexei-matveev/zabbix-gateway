@@ -14,6 +14,8 @@
     [compojure.core :as cc]
     [compojure.route :as route]))
 
+(defonce config (atom {:zabbix-server "localhost"
+                       :zabbix-port 10051}))
 ;;
 ;; Send metrics for Zabbix trapper items with "ZBXD\1" TCP protocoll.
 ;; Beware  that  Numeric(float) item  type  chokes  on large  numbers.
@@ -25,10 +27,11 @@
 ;;       :key "test.trapper.item.key[metric]"
 ;;       :value (long 42)}]
 ;;
-(defn- zbx-send [metrics]
-  (z/zabbix-sender "localhost"
-                   10051
-                   metrics))
+(defn- zabbix-sender [metrics]
+  (let [config (deref config)]
+    (z/zabbix-sender (:zabbix-server config)
+                     (:zabbix-port config)
+                     metrics)))
 
 ;;
 ;; We could  be parsing  JSON ourselves  here.  The  body of  the POST
@@ -42,7 +45,7 @@
 (defn- make-reply [request]
   ;; (pprint request)
   (let [metrics (:body request)
-        info (zbx-send metrics)]
+        info (zabbix-sender metrics)]
     ;; Just the wrapper "wrap-json-response"  does not suffice --- you
     ;; need to decorate with ring.util.response/response:
     (re/response info)))
