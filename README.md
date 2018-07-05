@@ -7,7 +7,6 @@ Protocoll.
 
 In Bash:
 
-    export http_proxy=""
     url=http://localhost:15001/trap
     txt='[{"host":"h","key":"k","value":"v"}]'
     curl -XPOST -H "Content-Type: application/json" $url -d $txt
