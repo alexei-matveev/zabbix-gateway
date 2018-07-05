@@ -5,14 +5,15 @@
   "This namespace will be renamed!"
   (:gen-class)
   (:require
-    [server-clj.zabbix :as z]
-    [ring.adapter.jetty :refer [run-jetty]]
-    [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
-    [ring.util.response :as re]
-    [ring.middleware.params :refer [wrap-params]]
-    [clojure.pprint :refer [pprint]]    ; FIXME: for debug
-    [compojure.core :as cc]
-    [compojure.route :as route]))
+   [clojure.tools.cli :refer [parse-opts]]
+   [server-clj.zabbix :as z]
+   [ring.adapter.jetty :refer [run-jetty]]
+   [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
+   [ring.util.response :as re]
+   [ring.middleware.params :refer [wrap-params]]
+   [clojure.pprint :refer [pprint]]    ; FIXME: for debug
+   [compojure.core :as cc]
+   [compojure.route :as route]))
 
 (defonce config (atom {:zabbix-server "localhost"
                        :zabbix-port 10051}))
@@ -78,13 +79,21 @@
   (run-jetty site {:port port :join? false}))
 
 ;; See usage in the README.md
+(def cli-opts
+  [["-p" "--port PORT" "Port number"
+    :default 15001
+    :parse-fn #(Integer/parseInt %)]
+   ["-H" "--zabbix-server HOSTNAME" "Zabbix server/proxy"
+    :default "localhost"]
+   ["-P" "--zabbix-port PORT" "Zabbix server/proxy port"
+    :default 10051
+    :parse-fn #(Integer/parseInt %)]])
+
 (defn -main
   "Starts a webserver at specified port number (default is 15001)"
-  [& [port zabbix-server zabbix-port]]
-  (let [cfg {:port (Integer. (or port "15001"))
-             :zabbix-server (or zabbix-server "localhost")
-             :zabbix-port (Integer. (or zabbix-port "10051"))}]
-    (println "Starting server ..." cfg)
-    (swap! config (fn [_] cfg)))
+  [& args]
+  (let [opts (parse-opts args cli-opts)]
+    (swap! config (fn [_] (:options opts))))
+  (println "Starting server ..." @config)
   (let [port (:port @config)]
     (make-and-start-server port)))
