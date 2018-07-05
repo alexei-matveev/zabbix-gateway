@@ -19,8 +19,7 @@
 ;; not indicate a JSON content though.  Parse-csv seems to accept UTF8
 ;; with BOM but the JSON parser is not so cooperative:
 ;;
-;; http_proxy="" curl -XPOST -H "Content-Type: application/json"
-;; --data-binary @test-no-bom.json http://localhost:5001/post-json
+;; http_proxy="" curl -XPOST -H "Content-Type: application/json" http://localhost:15001/post-json -d @file.json
 ;;
 (defn- make-post-reply [request]
   ;; (pprint request)
@@ -29,9 +28,11 @@
   ;; its  content,  but printing  does  use  (vec ...)  instead.  Data
   ;; arrival time stamp is common for all entries:
   (let [body (:body request)]
+    (println body)
     (str "ok\n")))
 
 (cc/defroutes api-routes
+  ;; "time" prints the elapsed time ...
   (cc/POST "/post-json" request (time (make-post-reply request))))
 
 ;;
@@ -59,17 +60,13 @@
   (run-jetty site {:port port :join? false}))
 
 ;;
-;; To check if the server runs:
-;;
-;;     http_proxy="" curl -XPOST http://localhost:15001/post-json -d 1
-;;
-;; or
-;;
-;;     echo 1 | http_proxy= "" curl -XPOST http://localhost:15001/post-json -d @-
+;; See "curl" usage above ...
 ;;
 (defn -main
   "Starts a webserver at specified port number (default is 15001)"
   [& [port]]
-  (let [port (Integer. (or port 15001))]
-    (make-and-start-server port)        ; non-blocking
-    (prn "server is running...")))
+  (let [port (Integer. (or port 15001))
+        ;; This is non blocking:
+        server (make-and-start-server port)]
+    (println "server is running..." server)
+    server))
