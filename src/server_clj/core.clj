@@ -11,16 +11,21 @@
     [compojure.core :as cc]
     [compojure.route :as route]))
 
-;; Send   the   result  to   Zabbix   trapper   items.   Beware   that
-;; Numeric(float) item  type chokes on large  numbers.  Consider using
-;; Numeric(unsigned) and convert to long integers here.
-(defn- zbx-send []
-  (let [metrics [{:host "test-host"
-                  :key "test.trapper.item.key[metric]"
-                  :value (long 42)}]]
-    (z/zabbix-sender "localhost"
-                     10051
-                     metrics)))
+;;
+;; Send  metrics Zabbix  trapper  items with  "ZBXD\1" TCP  protocoll.
+;; Beware  that  Numeric(float) item  type  chokes  on large  numbers.
+;; Consider using Numeric(unsigned) and convert to long integers here.
+;;
+;; Zabbix sender format is about that much:
+;;
+;;     [{:host "test-host"
+;;       :key "test.trapper.item.key[metric]"
+;;       :value (long 42)}]
+;;
+(defn- zbx-send [metrics]
+  (z/zabbix-sender "localhost"
+                   10051
+                   metrics))
 
 ;;
 ;; We could  be parsing  JSON ourselves  here.  The  body of  the POST
@@ -31,7 +36,7 @@
 ;; not indicate a JSON content though.  Parse-csv seems to accept UTF8
 ;; with BOM but the JSON parser is not so cooperative:
 ;;
-;; http_proxy="" curl -XPOST -H "Content-Type: application/json" http://localhost:15001/post-json -d @file.json
+;; http_proxy="" curl -XPOST -H "Content-Type: application/json" http://localhost:15001/post-json -d '[{"host":"h","key":"k","value":"v"}]'
 ;;
 (defn- make-reply [request]
   (pprint request)
@@ -39,11 +44,13 @@
   ;; The parser  output isa LazySeq,  conversion to str does  not show
   ;; its  content,  but printing  does  use  (vec ...)  instead.  Data
   ;; arrival time stamp is common for all entries:
-  (let [body (:body request)]
-    (println body)
+  (let [metrics (:body request)
+        info (zbx-send metrics)
+        tx {:q metrics :a info}]
+    (println tx)
     ;; Just the wrapper "wrap-json-response" does not suffice you need
     ;; to decorate with ring.util.response/response:
-    (re/response {:pong body})))
+    (re/response tx)))
 
 (cc/defroutes api-routes
   (cc/POST "/post-json" request (make-reply request)))
