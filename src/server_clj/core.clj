@@ -28,9 +28,9 @@
 ;;       :value (long 42)}]
 ;;
 (defn- zabbix-sender [metrics]
-  (let [config (deref config)]
-    (z/zabbix-sender (:zabbix-server config)
-                     (:zabbix-port config)
+  (let [cfg @config]
+    (z/zabbix-sender (:zabbix-server cfg)
+                     (:zabbix-port cfg)
                      metrics)))
 
 ;;
@@ -80,9 +80,11 @@
 ;; See usage in the README.md
 (defn -main
   "Starts a webserver at specified port number (default is 15001)"
-  [& [port]]
-  (let [port (Integer. (or port 15001))
-        ;; This is non blocking:
-        server (make-and-start-server port)]
-    (println "server is running..." server)
-    server))
+  [& [port zabbix-server zabbix-port]]
+  (let [cfg {:port (Integer. (or port "15001"))
+             :zabbix-server (or zabbix-server "localhost")
+             :zabbix-port (Integer. (or zabbix-port "10051"))}]
+    (println "Starting server ..." cfg)
+    (swap! config (fn [_] cfg)))
+  (let [port (:port @config)]
+    (make-and-start-server port)))
