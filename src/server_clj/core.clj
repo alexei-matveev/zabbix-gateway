@@ -36,7 +36,7 @@
 ;; not indicate a JSON content though.  Parse-csv seems to accept UTF8
 ;; with BOM but the JSON parser is not so cooperative:
 ;;
-;; http_proxy="" curl -XPOST -H "Content-Type: application/json" http://localhost:15001/post-json -d '[{"host":"h","key":"k","value":"v"}]'
+;; http_proxy="" curl -XPOST -H "Content-Type: application/json" http://localhost:15001/trap -d '[{"host":"h","key":"k","value":"v"}]'
 ;;
 (defn- make-reply [request]
   (pprint request)
@@ -53,7 +53,7 @@
     (re/response info)))
 
 (cc/defroutes api-routes
-  (cc/POST "/post-json" request (make-reply request)))
+  (cc/POST "/trap" request (make-reply request)))
 
 ;;
 ;; This magic is to make the handler for Jetty adapter. There are also
