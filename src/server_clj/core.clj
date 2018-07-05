@@ -2,14 +2,25 @@
   "This namespace will be renamed!"
   (:gen-class)
   (:require
+    [server-clj.zabbix :as z]
     [ring.adapter.jetty :refer [run-jetty]]
     [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
     [ring.util.response :as re]
     [ring.middleware.params :refer [wrap-params]]
     [clojure.pprint :refer [pprint]]    ; FIXME: for debug
-    [clj-time.core :as time]            ; FIXME: not in project.clj
     [compojure.core :as cc]
     [compojure.route :as route]))
+
+;; Send   the   result  to   Zabbix   trapper   items.   Beware   that
+;; Numeric(float) item  type chokes on large  numbers.  Consider using
+;; Numeric(unsigned) and convert to long integers here.
+(defn- zbx-send []
+  (let [metrics [{:host "test-host"
+                  :key "test.trapper.item.key[metric]"
+                  :value (long 42)}]]
+    (z/zabbix-sender "localhost"
+                     10051
+                     metrics)))
 
 ;;
 ;; We could  be parsing  JSON ourselves  here.  The  body of  the POST
