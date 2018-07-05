@@ -4,6 +4,7 @@
   (:require
     [ring.adapter.jetty :refer [run-jetty]]
     [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
+    [ring.util.response :as re]
     [ring.middleware.params :refer [wrap-params]]
     [clojure.pprint :refer [pprint]]    ; FIXME: for debug
     [clj-time.core :as time]            ; FIXME: not in project.clj
@@ -21,19 +22,20 @@
 ;;
 ;; http_proxy="" curl -XPOST -H "Content-Type: application/json" http://localhost:15001/post-json -d @file.json
 ;;
-(defn- make-post-reply [request]
-  ;; (pprint request)
+(defn- make-reply [request]
+  (pprint request)
 
   ;; The parser  output isa LazySeq,  conversion to str does  not show
   ;; its  content,  but printing  does  use  (vec ...)  instead.  Data
   ;; arrival time stamp is common for all entries:
   (let [body (:body request)]
     (println body)
-    (str "ok\n")))
+    ;; Just the wrapper "wrap-json-response" does not suffice you need
+    ;; to decorate with ring.util.response/response:
+    (re/response {:pong body})))
 
 (cc/defroutes api-routes
-  ;; "time" prints the elapsed time ...
-  (cc/POST "/post-json" request (time (make-post-reply request))))
+  (cc/POST "/post-json" request (make-reply request)))
 
 ;;
 ;; This magic is to make the handler for Jetty adapter. There are also
