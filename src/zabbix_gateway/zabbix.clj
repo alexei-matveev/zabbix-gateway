@@ -4,7 +4,7 @@
 ;; this file  to the minimum.  Also Keep the  two version in  sync, if
 ;; possible.
 ;;
-(ns server-clj.zabbix
+(ns zabbix-gateway.zabbix
   (:require [clojure.java.io :as io]
             [cheshire.core :as json])
   (:import [java.nio ByteBuffer ByteOrder]

@@ -1,12 +1,12 @@
 ;;;
 ;;; For usage see README.md at the root of the repository ...
 ;;;
-(ns server-clj.core
-  "This namespace will be renamed!"
+(ns zabbix-gateway.core
+  "HTTP handler calling Zabbix sender"
   (:gen-class)
   (:require
+   [zabbix-gateway.zabbix :as z]
    [clojure.tools.cli :refer [parse-opts]]
-   [server-clj.zabbix :as z]
    [ring.adapter.jetty :refer [run-jetty]]
    [ring.middleware.json :refer [wrap-json-body wrap-json-response]]
    [ring.util.response :as re]
