@@ -1,3 +1,6 @@
+;;;
+;;; For usage see README.md at the root of the repository ...
+;;;
 (ns server-clj.core
   "This namespace will be renamed!"
   (:gen-class)
@@ -36,18 +39,10 @@
 ;; not indicate a JSON content though.  Parse-csv seems to accept UTF8
 ;; with BOM but the JSON parser is not so cooperative:
 ;;
-;; http_proxy="" curl -XPOST -H "Content-Type: application/json" http://localhost:15001/trap -d '[{"host":"h","key":"k","value":"v"}]'
-;;
 (defn- make-reply [request]
-  (pprint request)
-
-  ;; The parser  output isa LazySeq,  conversion to str does  not show
-  ;; its  content,  but printing  does  use  (vec ...)  instead.  Data
-  ;; arrival time stamp is common for all entries:
+  ;; (pprint request)
   (let [metrics (:body request)
-        info (zbx-send metrics)
-        tx {:q metrics :a info}]
-    (println tx)
+        info (zbx-send metrics)]
     ;; Just the wrapper "wrap-json-response"  does not suffice --- you
     ;; need to decorate with ring.util.response/response:
     (re/response info)))
@@ -79,9 +74,7 @@
 (defn make-and-start-server [port]
   (run-jetty site {:port port :join? false}))
 
-;;
-;; See "curl" usage above ...
-;;
+;; See usage in the README.md
 (defn -main
   "Starts a webserver at specified port number (default is 15001)"
   [& [port]]
