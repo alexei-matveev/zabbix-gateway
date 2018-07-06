@@ -1,6 +1,6 @@
 ;; See the sample project file for other options:
 ;; https://github.com/technomancy/leiningen/blob/master/sample.project.clj
-(defproject server-clj "0.1.0-SNAPSHOT"
+(defproject zabbix-gateway "0.1.0-SNAPSHOT"
   :description "HTTP to Zabbix Sender/Trapper"
   :url "https://github.com/alexei-matveev/zabbix-gateway"
   :license {:name "Eclipse Public License"
@@ -22,5 +22,5 @@
   ;; alias for this.
   :jvm-opts ["-Xmx128m" "-Xms64m"]
   ;; Only for uberjar (see :profiles) othewise "lein run" is slower:
-  ;; :aot [server-clj.core]
+  ;; :aot [zabbix-gateway.core]
   :main zabbix-gateway.core)
