@@ -5,7 +5,16 @@ Protocoll.
 
 ## Usage
 
-In Bash:
+One way to start the gateway:
+
+    lein run -H $proxy
+
+Prepare and run JAR for deployment:
+
+    lein uberjar
+    java -jar ...
+
+To post the data in Bash:
 
     url=http://localhost:15001/trap
     txt='[{"host":"h","key":"k","value":"v"}]'
