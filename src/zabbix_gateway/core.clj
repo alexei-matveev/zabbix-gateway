@@ -1,13 +1,18 @@
 ;;;
 ;;; For usage see README.md at the root of the repository.
 ;;;
-;;; FIXME:  In large  installations  the hosts  are distributed  among
+;;; TODO:  In  large installations  the  hosts  are distributed  among
 ;;; potentially many proxy servers. The  Zabbix Server itself will not
 ;;; accept trapper data for any of the hosts connected via proxy. Well
 ;;; it will  reply with response =  "success" but also processed  = 0,
 ;;; with all of  them "failed". For a single gateway  that is supposed
 ;;; to be capable to forward trapper items for all hosts it would need
-;;; to know relation between the host and the proxy ...
+;;; to  know  the  relation  between  the host  and  the  proxy.   The
+;;; alternative is to ask the caller to choose between multiple Zabbix
+;;; proxies and Zabbix server itself.
+;;;
+;;; One  possibility to  offer a  choice  of the  proxy/server to  the
+;;; caller is to configure multiple endpoints or accepting URL params.
 ;;;
 (ns zabbix-gateway.core
   "HTTP handler calling Zabbix sender"
