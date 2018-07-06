@@ -1,5 +1,13 @@
 ;;;
-;;; For usage see README.md at the root of the repository ...
+;;; For usage see README.md at the root of the repository.
+;;;
+;;; FIXME:  In large  installations  the hosts  are distributed  among
+;;; potentially many proxy servers. The  Zabbix Server itself will not
+;;; accept trapper data for any of the hosts connected via proxy. Well
+;;; it will  reply with response =  "success" but also processed  = 0,
+;;; with all of  them "failed". For a single gateway  that is supposed
+;;; to be capable to forward trapper items for all hosts it would need
+;;; to know relation between the host and the proxy ...
 ;;;
 (ns zabbix-gateway.core
   "HTTP handler calling Zabbix sender"
