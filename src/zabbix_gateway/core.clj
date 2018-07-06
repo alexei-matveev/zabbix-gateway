@@ -93,7 +93,14 @@
   "Starts a webserver at specified port number (default is 15001)"
   [& args]
   (let [opts (parse-opts args cli-opts)]
+    #_(println opts)
+    ;; We do not expect any positional arguments:
+    (when (> (count (:arguments opts)) 0)
+      (println (str "Usage:\n"
+                    (:summary opts)))
+      (System/exit 1))
+    ;; Store config in a global atom:
     (swap! config (fn [_] (:options opts))))
-  (println "Starting server ..." @config)
+  (println "Starting server. Config:" @config)
   (let [port (:port @config)]
     (make-and-start-server port)))
