@@ -3,6 +3,11 @@
 Translates  HTTP   POSTs  into  "ZBXD\1"  TCP   Zabbix  Sender/Trapper
 Protocoll.
 
+[Leiningen](https://github.com/technomancy/leiningen) dependency
+information:
+
+    [f0bec0d/zabbix-gateway "0.1.0-SNAPSHOT"]
+
 ## Usage
 
 One way to start the gateway:
