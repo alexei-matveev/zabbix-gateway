@@ -1,11 +1,11 @@
 ;; See the sample project file for other options:
 ;; https://github.com/technomancy/leiningen/blob/master/sample.project.clj
-(defproject zabbix-gateway "0.1.0-SNAPSHOT"
+(defproject f0bec0d/zabbix-gateway "0.1.0-SNAPSHOT"
   :description "HTTP to Zabbix Sender/Trapper"
   :url "https://github.com/alexei-matveev/zabbix-gateway"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/tools.cli "0.3.7"]
                  [ring/ring-core "1.7.0-RC1"]
                  [ring/ring-jetty-adapter "1.7.0-RC1"]
