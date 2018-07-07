@@ -18,7 +18,7 @@
   "HTTP handler calling Zabbix sender"
   (:gen-class)
   (:require
-   [zabbix-gateway.zabbix :as z]
+   [proto-zabbix.proto :as z]
    [clojure.tools.cli :refer [parse-opts]]
    [ring.adapter.jetty :refer [run-jetty]]
    [ring.middleware.json :refer [wrap-json-body wrap-json-response]]

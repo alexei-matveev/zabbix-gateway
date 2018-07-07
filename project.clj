@@ -6,6 +6,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
+                 [f0bec0d/proto-zabbix "0.1.0-SNAPSHOT"]
                  [org.clojure/tools.cli "0.3.7"]
                  [ring/ring-core "1.7.0-RC1"]
                  [ring/ring-jetty-adapter "1.7.0-RC1"]
