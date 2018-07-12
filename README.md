@@ -4,9 +4,9 @@ Translates  HTTP   POSTs  into  "ZBXD\1"  TCP   Zabbix  Sender/Trapper
 Protocoll.
 
 [Leiningen](https://github.com/technomancy/leiningen) dependency
-information:
+information for the latest version at Clojars:
 
-    [f0bec0d/zabbix-gateway "0.1.0-SNAPSHOT"]
+![](https://clojars.org/f0bec0d/zabbix-gateway/latest-version.svg)
 
 ## Usage
 
