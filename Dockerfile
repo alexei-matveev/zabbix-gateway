@@ -3,7 +3,16 @@
 #
 #     lein uberjar
 #
-# Also note the whitelisting in .dockerignore.
+# then
+#
+#     docker build -t f0bec0d/zabbix-gateway .
+#
+# and push it to Docker Hub:
+#
+#     docker login
+#     docker push f0bec0d/zabbix-gateway
+#
+# Note the whitelisting in .dockerignore.
 #
 FROM openjdk:8-jre-alpine
 WORKDIR /app
