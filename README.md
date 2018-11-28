@@ -8,6 +8,10 @@ information for the latest version at Clojars:
 
 ![](https://clojars.org/f0bec0d/zabbix-gateway/latest-version.svg)
 
+Run a Docker Hub Image:
+
+    docker run --rm -itd -p 15001:15001 f0bec0d/zabbix-gateway
+
 ## Usage
 
 One way to start the gateway:

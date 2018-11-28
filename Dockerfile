@@ -22,3 +22,6 @@ WORKDIR /app
 # image will always be rebuilt after a lein uberjar:
 COPY /target/zabbix-gateway.jar /app/app.jar
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+
+# This is the reverse of the Zabbix server port 10051:
+EXPOSE 15001/tcp
