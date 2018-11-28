@@ -19,6 +19,10 @@
   ;; run a  task with a different  set of active profiles.   See `lein
   ;; help profiles` for a detailed explanation.
   :profiles {:uberjar {:aot :all}}      ; activated for uberjar
+
+  ;; So that the Docker finds it always at the same location:
+  :uberjar-name "zabbix-gateway.jar"
+
   ;; You can set JVM-level options here. The :java-opts key is an
   ;; alias for this.
   :jvm-opts ["-Xmx128m" "-Xms64m"]

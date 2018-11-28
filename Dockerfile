@@ -1,11 +1,11 @@
-FROM clojure AS build-env
-WORKDIR /usr/src/myapp
-COPY project.clj /usr/src/myapp/
-RUN lein deps
-COPY . /usr/src/myapp
-RUN mv "$(lein uberjar | sed -n 's/^Created \(.*standalone\.jar\)/\1/p')" myapp-standalone.jar
-
+#
+# You need to first build the Uberjar with
+#
+#     lein uberjar
+#
+# Also note the whitelisting in .dockerignore.
+#
 FROM openjdk:8-jre-alpine
-WORKDIR /myapp
-COPY --from=build-env /usr/src/myapp/myapp-standalone.jar /myapp/myapp.jar
-ENTRYPOINT ["java", "-jar", "/myapp/myapp.jar"]
+WORKDIR /app
+COPY /target/zabbix-gateway.jar /app/app.jar
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
