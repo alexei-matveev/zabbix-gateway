@@ -24,4 +24,5 @@
   :jvm-opts ["-Xmx128m" "-Xms64m"]
   ;; Only for uberjar (see :profiles) othewise "lein run" is slower:
   ;; :aot [zabbix-gateway.core]
-  :main zabbix-gateway.core)
+  :main zabbix-gateway.core
+  :global-vars {*warn-on-reflection* true})
