@@ -10,7 +10,7 @@ information for the latest version at Clojars:
 
 Run a Docker Hub Image:
 
-    docker run --rm -itd -p 15001:15001 f0bec0d/zabbix-gateway
+    docker run --rm -itd -p 15001:15001 f0bec0d/zabbix-gateway --zabbix-server=172.17.0.1
 
 ## Usage
 
