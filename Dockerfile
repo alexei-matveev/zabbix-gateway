@@ -7,5 +7,9 @@
 #
 FROM openjdk:8-jre-alpine
 WORKDIR /app
+
+# FWIW, uberjars, created  with lein uberjar, or all of  them (?)  are
+# not "stable". Rebuild  with "lein uberjar" changes the  hash. So the
+# image will always be rebuilt after a lein uberjar:
 COPY /target/zabbix-gateway.jar /app/app.jar
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
