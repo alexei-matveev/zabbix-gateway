@@ -8,8 +8,8 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [f0bec0d/proto-zabbix "0.1.0"]
                  [org.clojure/tools.cli "0.3.7"]
-                 [ring/ring-core "1.7.0-RC1"]
-                 [ring/ring-jetty-adapter "1.7.0-RC1"]
+                 [ring/ring-core "1.7.1"]
+                 [ring/ring-jetty-adapter "1.7.1"]
                  [ring/ring-json "0.4.0"]
                  [compojure "1.6.1"]]
   ;; Profiles.  Each  active  profile  gets merged  into  the  project
