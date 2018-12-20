@@ -18,8 +18,9 @@
 #
 FROM clojure:lein AS builder
 WORKDIR /work
-ADD . .
-
+ADD project.clj .
+RUN lein deps
+ADD src .
 RUN lein uberjar
 
 FROM openjdk:8-jre-alpine
