@@ -1,4 +1,6 @@
 #
+# NOTE: Beware of the whitelisting in .dockerignore!
+#
 # Execute multistage build by
 #
 #     docker build -t f0bec0d/zabbix-gateway .
@@ -8,7 +10,7 @@
 #     docker login
 #     docker push f0bec0d/zabbix-gateway
 #
-# Note the whitelisting in .dockerignore. To run a container issue
+# To run a container issue
 #
 #     docker run --rm -itd -p 15001:15001 f0bec0d/zabbix-gateway --zabbix-server=172.17.0.1
 #
