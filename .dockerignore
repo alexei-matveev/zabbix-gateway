@@ -3,3 +3,5 @@
 
 # Allow:
 !target/zabbix-gateway.jar
+!src
+!project.clj

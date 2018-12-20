@@ -20,15 +20,21 @@
 # you may  think inside the container.  The IP address of  your Docker
 # Host or rather Zabbix Server Hosts may differ though.
 #
+FROM clojure:lein AS builder
+WORKDIR /work
+ADD . .
+
+RUN lein uberjar
+
 FROM openjdk:8-jre-alpine
+MAINTAINER alexei.matveev@gmail.com
 WORKDIR /app
 
 # FWIW, uberjars, created  with lein uberjar, or all of  them (?)  are
 # not "stable". Rebuild  with "lein uberjar" changes the  hash. So the
 # image will always be rebuilt after a lein uberjar:
-COPY /target/zabbix-gateway.jar /app/app.jar
-
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+COPY --from=builder /work/target/zabbix-gateway.jar /app/app.jar
 
 # This is the reverse of the Zabbix server port 10051:
 EXPOSE 15001/tcp
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
