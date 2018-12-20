@@ -1,9 +1,5 @@
 #
-# You need to first build the Uberjar with
-#
-#     lein uberjar
-#
-# then
+# Execute multistage build by
 #
 #     docker build -t f0bec0d/zabbix-gateway .
 #
